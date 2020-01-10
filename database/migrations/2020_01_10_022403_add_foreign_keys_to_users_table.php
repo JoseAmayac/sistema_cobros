@@ -22,6 +22,8 @@ class AddForeignKeysToUsersTable extends Migration
             // $table->integer('vehicle_id')->unsigned();
             $table->unsignedBigInteger('vehicle_id');
 
+            $table->unsignedBigInteger('role_id');
+
             $table->foreign('country_id')
                     ->references('id')->on('countries')
                     ->onDelete('restrict')
@@ -34,6 +36,11 @@ class AddForeignKeysToUsersTable extends Migration
 
             $table->foreign('vehicle_id')
                     ->references('id')->on('vehicles')
+                    ->onDelete('restrict')
+                    ->onUpdate('restrict');
+            
+            $table->foreign('role_id')
+                    ->references('id')->on('roles')
                     ->onDelete('restrict')
                     ->onUpdate('restrict');
         });

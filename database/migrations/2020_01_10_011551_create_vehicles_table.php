@@ -18,6 +18,7 @@ class CreateVehiclesTable extends Migration
             $table->string('license_plate');
             $table->string('model');
             $table->string('cylindering');
+            $table->date('papers_due_date');
             $table->timestamps();
         });
     }
