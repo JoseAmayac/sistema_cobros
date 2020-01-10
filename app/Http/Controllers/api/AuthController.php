@@ -42,14 +42,6 @@ class AuthController extends Controller
         return $this->login($request);
     }
 
-    public function update($id,$cuenta)
-    {
-        $user = User::find($id);
-        $user->wallet += $cuenta;
-        $user->update();
-        
-    }
-
     /**
      * Get the authenticated User.
      *
