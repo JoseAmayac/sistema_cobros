@@ -19,7 +19,7 @@ class CreateExpenseUserTable extends Migration
 
             // Llaves foraneas.
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('loan_id');
+            $table->unsignedBigInteger('expense_id');
 
             $table->foreign('user_id')
                     ->references('id')->on('users')
