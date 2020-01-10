@@ -15,12 +15,12 @@ class AddForeignKeysToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // $table->integer('country_id')->unsigned();
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('country_id')->nullable();
             // $table->integer('city_id')->unsigned();
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
 
             // $table->integer('vehicle_id')->unsigned();
-            $table->unsignedBigInteger('vehicle_id');
+            $table->unsignedBigInteger('vehicle_id')->nullable();
 
             $table->unsignedBigInteger('role_id');
 
