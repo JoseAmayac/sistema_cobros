@@ -24,6 +24,8 @@ class AddForeignKeysToUsersTable extends Migration
 
             $table->unsignedBigInteger('role_id');
 
+            $table->unsignedBigInteger('admin_id')->nullable();
+
             $table->foreign('country_id')
                     ->references('id')->on('countries')
                     ->onDelete('restrict')
@@ -43,6 +45,11 @@ class AddForeignKeysToUsersTable extends Migration
                     ->references('id')->on('roles')
                     ->onDelete('restrict')
                     ->onUpdate('restrict');
+
+            $table->foreign('admin_id')
+                    ->references('id')->on('users')
+                    ->onDelete('restrict')
+                    ->onUpdate('restrict');
         });
     }
 
@@ -54,7 +61,7 @@ class AddForeignKeysToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            //Schema::dropIfExists('users');
         });
     }
 }

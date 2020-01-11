@@ -12,9 +12,14 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        return Role::create([
-            'name' => 'admin',
-            'description' => 'Este es el rol del administrador'
-        ]);
+        $role1 = new Role();
+        $role1->name = "admin";
+        $role1->description = "Este es el rol del administrador";
+        $role1->save();
+
+        // return Role::create([
+        //     'name' => 'admin',
+        //     'description' => 'Este es el rol del administrador'
+        // ]);
     }
 }
