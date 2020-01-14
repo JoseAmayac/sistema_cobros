@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\VehicleRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Vehicle;
+use Carbon\Carbon;
 
 class VehicleController extends Controller
 {
@@ -16,7 +19,7 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::all();
 
-        return response()->json(["data" => 'vehicles']);
+        return response()->json(['vehicles' => $vehicles]);
     }
 
     /**
@@ -25,9 +28,18 @@ class VehicleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VehicleRequest $request)
     {
-        //
+        $vehicle = new Vehicle();
+        $vehicle->license_plate = $request->license_plate;
+        $vehicle->mark = $request->mark;
+        $vehicle->model = $request->model;
+        $vehicle->cylindering = $request->cylindering;
+        $vehicle->papers_due_date = Carbon::now();
+        //$vehicle->papers_due_data = $request->papers_due_data;
+        $vehicle->save();
+
+        return response()->json(['data' => $vehicle]);
     }
 
     /**
@@ -38,7 +50,9 @@ class VehicleController extends Controller
      */
     public function show($id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+
+        return response()->json(['vehicle' => $vehicle]);
     }
 
     /**
@@ -48,7 +62,7 @@ class VehicleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(VehicleRequest $request, $id)
     {
         //
     }

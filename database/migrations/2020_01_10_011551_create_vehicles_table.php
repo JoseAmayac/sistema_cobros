@@ -16,6 +16,7 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('license_plate');
+            $table->string('mark');
             $table->string('model');
             $table->string('cylindering');
             $table->date('papers_due_date');
