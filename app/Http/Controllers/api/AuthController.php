@@ -6,6 +6,7 @@ use App\Cart;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
+use App\Role;
 use App\User;
 
 class AuthController extends Controller
@@ -40,7 +41,13 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
-        User::create($request->all());
+        $user = new User();
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->role_id = Role::where('name','admin')->first()->id;
+        $user->save();
         return $this->login($request);
     }
 

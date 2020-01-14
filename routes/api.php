@@ -24,5 +24,6 @@ Route::group([
     Route::post('logout', 'api\AuthController@logout');
     Route::post('refresh', 'api\AuthController@refresh');
     Route::post('me', 'api\AuthController@me');
-
 });
+
+Route::post('reset-password','api\ResetPasswordController@sendEmail');
