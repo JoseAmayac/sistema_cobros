@@ -21,6 +21,15 @@ class CreateVehiclesTable extends Migration
             $table->string('cylindering');
             $table->date('papers_due_date');
             $table->timestamps();
+            $table->softDeletes();
+
+            //Llaves foraneas
+            $table->unsignedBigInteger('admin_id');
+
+            $table->foreign('admin_id')
+                    ->references('id')->on('users')
+                    ->onDelete('restrict')
+                    ->onUpdate('restrict');
         });
     }
 

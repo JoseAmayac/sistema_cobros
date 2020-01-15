@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Vehicle;
+use App\User;
 
 class VehiclesTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class VehiclesTableSeeder extends Seeder
         $vehicle->model = "2010";
         $vehicle->cylindering = "200";
         $vehicle->papers_due_date = "2020-01-14 14:57:08"; 
+        $vehicle->admin_id = User::where('name','admin')->first()->id;
 
         $vehicle->save();
     }
