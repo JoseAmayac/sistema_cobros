@@ -3,7 +3,7 @@
 
 Haga  click en el siguiente botón para restablecer su contraseña
 
-@component('mail::button', ['url' => 'http://localhost:4200/response?token='.$token])
+@component('mail::button', ['url' => 'http://localhost:4200/resetPassword/response?token='.$token.'&email='.$email])
 Recuperar contraseña
 @endcomponent
 

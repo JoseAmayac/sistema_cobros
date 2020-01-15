@@ -18,7 +18,6 @@ class VehicleController extends Controller
     public function index()
     {
         $vehicles = Vehicle::all();
-
         return response()->json(['vehicles' => $vehicles]);
     }
 
@@ -51,7 +50,6 @@ class VehicleController extends Controller
     public function show($id)
     {
         $vehicle = Vehicle::findOrFail($id);
-
         return response()->json(['vehicle' => $vehicle]);
     }
 

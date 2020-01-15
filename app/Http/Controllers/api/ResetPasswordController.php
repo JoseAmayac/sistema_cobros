@@ -34,11 +34,11 @@ class ResetPasswordController extends Controller
 
     public function send($email){
         $token = $this->createToken($email);
-        Mail::to($email)->send(new ResetPasswordMail($token));
+        Mail::to($email)->send(new ResetPasswordMail($token,$email));
     }
 
     public function createToken($email){
-        $old_token = DB::table('password_resets')->where('email',$email)->first();
+        $old_token = DB::table('password_resets')->where('email',$email)->first()->token;
         if($old_token){
             return $old_token;
         }
