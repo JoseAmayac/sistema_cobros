@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\VehicleRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Vehicle;
 use Carbon\Carbon;
@@ -17,7 +18,11 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $id_admin = Auth::id();
+        //$vehicles = Vehicle::where('admin_id', $id_admin)->get();
+        $vehicles = Vehicle::where('admin_id', 1)->get();
+        //$vehicles = Vehicle::all();
+
         return response()->json(['vehicles' => $vehicles]);
     }
 
@@ -35,6 +40,11 @@ class VehicleController extends Controller
         $vehicle->model = $request->model;
         $vehicle->cylindering = $request->cylindering;
         $vehicle->papers_due_date = Carbon::now();
+        //$vehicle->admin_id = Auth::id();
+        $vehicle->admin_id = 1;
+        //$vehicle->admin_id = Auth::user();
+        //$user = Auth::user();
+        
         //$vehicle->papers_due_data = $request->papers_due_data;
         $vehicle->save();
 
@@ -62,7 +72,15 @@ class VehicleController extends Controller
      */
     public function update(VehicleRequest $request, $id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->license_plate = $request->license_plate;
+        $vehicle->mark = $request->mark;
+        $vehicle->model = $request->model;
+        $vehicle->cylindering = $request->cylindering;
+        $vehicle->papers_due_date = Carbon::now();
+        $vehicle->save();
+
+        return response()->json(['vehicle' => $vehicle]);
     }
 
     /**
@@ -73,6 +91,9 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::where('id', $id);
+        $vehicle->delete();
+
+        return response()->json(['vehicle' => 'jajajajja']);
     }
 }
