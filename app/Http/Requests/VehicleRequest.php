@@ -23,13 +23,13 @@ class VehicleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'license_plate' => [
+            'license_plate'=> [
                 'required',
                 'max:10',
-                'unique:vehicles,license_plate,35'
+                Rule::unique('vehicles', 'license_plate')->ignore($this->vehicle)
             ],
             'mark' => 'required|max:100',
             'model' => 'required|max:100',
