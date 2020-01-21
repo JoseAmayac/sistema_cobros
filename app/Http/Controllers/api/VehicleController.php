@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Vehicle;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class VehicleController extends Controller
 {
@@ -23,9 +25,7 @@ class VehicleController extends Controller
     public function index()
     {
         $id_admin = Auth::id();
-        //$vehicles = Vehicle::where('admin_id', $id_admin)->get();
-        $vehicles = Vehicle::where('admin_id', 1)->get();
-        //$vehicles = Vehicle::all();
+        $vehicles = Vehicle::where('admin_id', $id_admin)->get();
 
         return response()->json(['vehicles' => $vehicles]);
     }
@@ -44,12 +44,7 @@ class VehicleController extends Controller
         $vehicle->model = $request->model;
         $vehicle->cylindering = $request->cylindering;
         $vehicle->papers_due_date = Carbon::now();
-        //$vehicle->admin_id = Auth::id();
-        $vehicle->admin_id = 1;
-        //$vehicle->admin_id = Auth::user();
-        //$user = Auth::user();
-        
-        //$vehicle->papers_due_data = $request->papers_due_data;
+        $vehicle->admin_id = Auth::id();
         $vehicle->save();
 
         return response()->json(['data' => $vehicle]);
@@ -91,9 +86,7 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        $vehicle = Vehicle::where('id', $id);
-        $vehicle->delete();
-
-        return response()->json(['vehicle' => 'jajajajja']);
+        $vehicle = Vehicle::find($id)->delete();
+        return response()->json(['message' => 'El vehículo ha sido eliminado']);
     }
 }

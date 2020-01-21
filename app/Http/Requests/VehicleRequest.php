@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class VehicleRequest extends FormRequest
 {
@@ -21,10 +23,14 @@ class VehicleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
-            'license_plate' => 'required|max:10|unique:vehicles,license_plate,'.$this->route('vehicle'),
+            'license_plate' => [
+                'required',
+                'max:10',
+                'unique:vehicles,license_plate,35'
+            ],
             'mark' => 'required|max:100',
             'model' => 'required|max:100',
             'cylindering' => 'required|max:100',
