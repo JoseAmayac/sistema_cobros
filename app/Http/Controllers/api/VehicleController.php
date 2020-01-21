@@ -77,12 +77,8 @@ class VehicleController extends Controller
     public function update(VehicleRequest $request, $id)
     {
         $vehicle = Vehicle::findOrFail($id);
-        $vehicle->license_plate = $request->license_plate;
-        $vehicle->mark = $request->mark;
-        $vehicle->model = $request->model;
-        $vehicle->cylindering = $request->cylindering;
-        $vehicle->papers_due_date = Carbon::now();
-        $vehicle->save();
+        $vehicle->update($request->all());
+        $vehicle->papers_due_date = $request->papers_due_date;
 
         return response()->json(['vehicle' => $vehicle]);
     }

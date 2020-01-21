@@ -24,7 +24,7 @@ class VehicleRequest extends FormRequest
     public function rules()
     {
         return [
-            'license_plate' => 'required|unique:vehicles|max:10',
+            'license_plate' => 'required|max:10|unique:vehicles,license_plate,'.$this->route('vehicle'),
             'mark' => 'required|max:100',
             'model' => 'required|max:100',
             'cylindering' => 'required|max:100',
