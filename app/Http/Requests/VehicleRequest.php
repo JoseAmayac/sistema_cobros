@@ -25,11 +25,12 @@ class VehicleRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('vehicle');
         return [
             'license_plate'=> [
                 'required',
                 'max:10',
-                Rule::unique('vehicles', 'license_plate')->ignore($this->vehicle)
+                'unique:vehicles,license_plate,'.$this->route('vehicle').',id,deleted_at,NULL'
             ],
             'mark' => 'required|max:100',
             'model' => 'required|max:100',
