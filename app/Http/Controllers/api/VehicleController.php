@@ -17,6 +17,7 @@ class VehicleController extends Controller
     {
         $this->middleware('auth:api');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +28,7 @@ class VehicleController extends Controller
         $id_admin = Auth::id();
         $vehicles = Vehicle::where('admin_id', $id_admin)->get();
 
-        return response()->json(['vehicles' => $vehicles]);
+        return response()->json(['vehicles' => $vehicles], 200);
     }
 
     /**
@@ -46,8 +47,10 @@ class VehicleController extends Controller
         $vehicle->papers_due_date = Carbon::now();
         $vehicle->admin_id = Auth::id();
         $vehicle->save();
+        $resource_url = "api/vehicles/" . $vehicle->id;
 
-        return response()->json(['data' => $vehicle]);
+        return response()->json(['data' => $vehicle], 201)
+                        ->header('Location', $resource_url);
     }
 
     /**
@@ -59,7 +62,7 @@ class VehicleController extends Controller
     public function show($id)
     {
         $vehicle = Vehicle::findOrFail($id);
-        return response()->json(['vehicle' => $vehicle]);
+        return response()->json(['vehicle' => $vehicle], 200);
     }
 
     /**
@@ -75,7 +78,7 @@ class VehicleController extends Controller
         $vehicle->update($request->all());
         $vehicle->papers_due_date = $request->papers_due_date;
 
-        return response()->json(['vehicle' => $vehicle]);
+        return response()->json(['vehicle' => $vehicle], 200);
     }
 
     /**
@@ -87,6 +90,6 @@ class VehicleController extends Controller
     public function destroy($id)
     {
         $vehicle = Vehicle::find($id)->delete();
-        return response()->json(['message' => 'El vehículo ha sido eliminado']);
+        return response()->json(['message' => 'El vehículo ha sido eliminado'], 200);
     }
 }
