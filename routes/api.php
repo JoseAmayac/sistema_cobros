@@ -29,19 +29,15 @@ Route::group([
     Route::post('me', 'api\AuthController@me');
     Route::post('reset-password','api\ResetPasswordController@sendEmail');
     Route::post('changePassword','api\ChangePasswordController@change');
+
+    // Rutas para vehiculos
     Route::apiResource('vehicles', 'api\VehicleController');
+
+    // Rutas para clientes
+    Route::apiResource('clients', 'api\ClientController');
+
+    // Rutas para rutas, ajjaaajajja
+    Route::apiResource('routes','api\RouteController');
 });
-<<<<<<< HEAD
-=======
 
-/**
- * Rutas para realizar el CRUD de vehiculos.
- */
-Route::apiResource('vehicles', 'api\VehicleController');
->>>>>>> 585084d427615a001f9ec378c7c6fcec8a6871f5
-
-/**
- * Rutas para la realización el CRUD de clientes.
- */
-Route::apiResource('clients', 'api\ClientController');
 
