@@ -26,7 +26,7 @@ Route::group([
     Route::post('me', 'api\AuthController@me');
     Route::post('reset-password','api\ResetPasswordController@sendEmail');
     Route::post('changePassword','api\ChangePasswordController@change');
+    Route::apiResource('vehicles', 'api\VehicleController');
 });
-Route::apiResource('vehicles', 'api\VehicleController');
 
 

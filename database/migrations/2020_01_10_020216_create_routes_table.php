@@ -16,8 +16,14 @@ class CreateRoutesTable extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->double('ammount');            
+            $table->double('ammount');     
+            $table->unsignedBigInteger('admin_id');       
             $table->timestamps();
+
+            $table->foreign('admin_id')
+                    ->references('id')->on('users')
+                    ->onDelete('restrict')
+                    ->onUpdate('restrict');
         });
     }
 
