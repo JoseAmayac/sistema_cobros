@@ -24,6 +24,7 @@ class AddForeignKeysToUsersTable extends Migration
 
             $table->unsignedBigInteger('role_id');
 
+            // Recursiva, para modelar clientes del administrador.
             $table->unsignedBigInteger('admin_id')->nullable();
 
             $table->foreign('country_id')

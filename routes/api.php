@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Rutas para los procesos de inicio de sesión, cambiar password
+ * y cerrar sesión de un usuario(admin, cobrador) del sistema.
+ */
 Route::group([
     'middleware' => 'api'
 ], function ($router) {
@@ -28,5 +31,17 @@ Route::group([
     Route::post('changePassword','api\ChangePasswordController@change');
     Route::apiResource('vehicles', 'api\VehicleController');
 });
+<<<<<<< HEAD
+=======
 
+/**
+ * Rutas para realizar el CRUD de vehiculos.
+ */
+Route::apiResource('vehicles', 'api\VehicleController');
+>>>>>>> 585084d427615a001f9ec378c7c6fcec8a6871f5
+
+/**
+ * Rutas para la realización el CRUD de clientes.
+ */
+Route::apiResource('clients', 'api\ClientController');
 
