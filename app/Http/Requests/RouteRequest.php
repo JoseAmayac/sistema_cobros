@@ -24,7 +24,7 @@ class RouteRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100|min:3',
+            'name' => 'required|string|max:100|min:3|unique:vehicles,name,'.$this->route('route').',id,deleted_at,NULL',
             'ammount' => 'required|numeric'
         ];
     }

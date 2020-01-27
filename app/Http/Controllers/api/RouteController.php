@@ -39,7 +39,11 @@ class RouteController extends Controller
      */
     public function store(RouteRequest $request)
     {
-        $route = Route::create($request->all());
+        $route = new Route();
+        $route->name = $request->input('name');
+        $route->ammount = $request->input('ammount');
+        $route->admin_id = Auth::id();
+        $route->save();
 
         return response()->json([
             'route' => $route
