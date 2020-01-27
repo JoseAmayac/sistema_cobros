@@ -19,6 +19,7 @@ class CreateRoutesTable extends Migration
             $table->double('ammount');     
             $table->unsignedBigInteger('admin_id');       
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('admin_id')
                     ->references('id')->on('users')
