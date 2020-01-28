@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ClientRequest;
 use App\User;
 
 class ClientController extends Controller
@@ -32,9 +33,12 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $client = User::create($request->all());
+        $client->save();
+
+        return response()->json(['client' => $client]);
     }
 
     /**
@@ -45,7 +49,8 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = User::findOrFail($id);
+        return response()->json(['client' => $client]);
     }
 
     /**
@@ -55,9 +60,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientRequest $request, $id)
     {
-        //
+        $client = User::findOrFail($id);
+        $client->update($request->all());
     }
 
     /**
@@ -68,6 +74,11 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = User::findOrFail($id);
+        $client->delete();
+
+        return response()->json([
+            'message' => 'Cliente eliminado de la lista'
+        ]);
     }
 }

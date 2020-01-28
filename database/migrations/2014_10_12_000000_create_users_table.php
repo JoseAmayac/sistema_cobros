@@ -18,13 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('lastname');
             $table->string('dni')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('cellphone')->nullable();
             $table->string('address')->nullable();
             $table->string('second_address')->nullable();
             $table->enum('reputation', [1, 2, 3, 4, 5])->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->boolean('state')->nullable();
             $table->rememberToken();
             $table->timestamps();

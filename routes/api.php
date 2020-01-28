@@ -33,11 +33,11 @@ Route::group([
     // Rutas para vehiculos
     Route::apiResource('vehicles', 'api\VehicleController');
 
-    // Rutas para clientes
-    Route::apiResource('clients', 'api\ClientController');
+    
 
     // Rutas para rutas, ajjaaajajja
     Route::apiResource('routes','api\RouteController');
 });
 
-
+// Rutas para clientes
+Route::apiResource('clients', 'api\ClientController');
