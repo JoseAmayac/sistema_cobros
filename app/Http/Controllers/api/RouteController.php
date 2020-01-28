@@ -42,11 +42,12 @@ class RouteController extends Controller
         $route->name = $request->input('name');
         $route->ammount = $request->input('ammount');
         $route->admin_id = Auth::id();
-        $route->save();
+        return $route->admin_id;
+        //$route->save();
 
-        return response()->json([
-            'route' => $route
-        ]);
+        // return response()->json([
+        //     'route' => $route
+        // ]);
     }
 
     /**

@@ -15,7 +15,7 @@ class VehicleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
     
     /**
@@ -25,7 +25,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $id_admin = Auth::id();
+        $id_admin = Auth::id();  // DEJAR
+        //$id_admin = 1; // BORRAR
         $vehicles = Vehicle::where('admin_id', $id_admin)->get();
 
         return response()->json(['vehicles' => $vehicles], 200);

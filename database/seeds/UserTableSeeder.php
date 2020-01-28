@@ -23,6 +23,17 @@ class UserTableSeeder extends Seeder
         $admin->role_id = Role::where('name', 'admin')->first()->id;
         $admin->save();
 
+        // ************** COBRADORES **********************
+        $employee = new User();
+        $employee->name = "cobrador 1";
+        $employee->lastname = "Apellidos 1";
+        $employee->dni = "1234563564";
+        $employee->cellphone = "3114707230";
+        $employee->address = "Cra 7 # 8-21";
+        $employee->role_id = Role::where('name', 'employee')->first()->id;
+        $employee->admin_id = 1;
+        $employee->save();
+
         // ************** CLIENTES **********************
         $client = new User();
         $client->name = "cliente 1";
@@ -44,14 +55,6 @@ class UserTableSeeder extends Seeder
         $client2->admin_id = Auth::id();
         $client2->save();
 
-        // $client2 = new User();
-        // $client2->name = "cobrador 1";
-        // $client2->lastname = "Apellidos 1";
-        // $client2->dni = "1234563564";
-        // $client2->cellphone = "3114707230";
-        // $client2->address = "Cra 7 # 8-21";
-        // $client2->role_id = Role::where('name', 'employee')->first()->id;
-        // $client2->admin_id = 1;
-        // $client2->save();
+        
     }
 }
