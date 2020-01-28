@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
+use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
+// use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -23,7 +28,15 @@ class ClientController extends Controller
     {
         $id_admin = Auth::id();
         $clients = User::where('admin_id', $id_admin)->get();
-
+        /**
+         * Para poder ejecutar el método de asociacion entre las tablas, ademas de eliminar los usuarios que sean cobradores,
+         * también se puede hacer directamente con un where en la consulta, esto implica que el role_id siempre sea el mismo.
+         */
+        for ($i=0; $i < count($clients); $i++) { 
+            if($clients[$i]->role->name != 'client'){
+                unset($clients[$i]);
+            }
+        }
         return response()->json(['clients' => $clients], 200);
     }
 
@@ -35,10 +48,19 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        $client = User::create($request->all());
+        $id = Auth::id();
+        $client = User::create([
+            'name' => $request->input('name'),
+            'lastname' => $request->input('lastname'),
+            'dni' => $request->input('dni'),
+            'cellphone' => $request->input('cellphone'),
+            'address' => $request->input('address'),
+            'role_id' => Role::where('name','client')->first()->id
+        ]);
+        $client->admin_id = $id;
         $client->save();
 
-        return response()->json(['client' => $client]);
+        return response()->json(['client' => $client],200);
     }
 
     /**
@@ -50,6 +72,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = User::findOrFail($id);
+        $client->role;
         return response()->json(['client' => $client]);
     }
 
@@ -64,6 +87,10 @@ class ClientController extends Controller
     {
         $client = User::findOrFail($id);
         $client->update($request->all());
+
+        return response()->json([
+            'client' => $client
+        ],200);
     }
 
     /**

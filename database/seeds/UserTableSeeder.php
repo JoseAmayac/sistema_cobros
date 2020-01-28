@@ -3,6 +3,7 @@
 use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class UserTableSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class UserTableSeeder extends Seeder
         $admin->role_id = Role::where('name', 'admin')->first()->id;
         $admin->save();
 
-        //************** CLIENTES **********************
+        // ************** CLIENTES **********************
         $client = new User();
         $client->name = "cliente 1";
         $client->lastname = "Apellidos 1";
@@ -30,6 +31,7 @@ class UserTableSeeder extends Seeder
         $client->cellphone = "3113457536";
         $client->address = "Cra 6 # 7-21";
         $client->role_id = Role::where('name', 'client')->first()->id;
+        $client->admin_id = Auth::id();
         $client->save();
 
         $client2 = new User();
@@ -39,7 +41,17 @@ class UserTableSeeder extends Seeder
         $client2->cellphone = "3114707230";
         $client2->address = "Cra 7 # 8-21";
         $client2->role_id = Role::where('name', 'client')->first()->id;
+        $client2->admin_id = Auth::id();
         $client2->save();
 
+        // $client2 = new User();
+        // $client2->name = "cobrador 1";
+        // $client2->lastname = "Apellidos 1";
+        // $client2->dni = "1234563564";
+        // $client2->cellphone = "3114707230";
+        // $client2->address = "Cra 7 # 8-21";
+        // $client2->role_id = Role::where('name', 'employee')->first()->id;
+        // $client2->admin_id = 1;
+        // $client2->save();
     }
 }
