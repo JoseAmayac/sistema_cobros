@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NameRouteUnique;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RouteRequest extends FormRequest
@@ -23,9 +24,28 @@ class RouteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:100|min:3|unique:routes,name,'.$this->route('route').',id,deleted_at,NULL',
-            'ammount' => 'required|numeric'
-        ];
+        if($this->method() == "POST"){
+            return [
+                'name' => [
+                    'required',
+                    'string',
+                    'max:100',
+                    'min:3',
+                    new NameRouteUnique
+                ],
+                'ammount' => 'required|numeric|min:1'
+            ];
+        }else{
+            return [
+                'name' => [
+                    'required',
+                    'string',
+                    'max:100',
+                    'min:3',
+                    'unique:routes,name,'.$this->route('route').',id,deleted_at,NULL'
+                ],
+                'ammount' => 'required|numeric|min:1'
+            ];
+        }
     }
 }
