@@ -16,9 +16,20 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Método de asociación con tabla role 
      */
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
+
+    /**
+     * Método de asociación con tabla rutas 
+     * (un usuario esta en varias rutas) 
+     */
+    public function routes()
+    {
+        return $this->belongsToMany(Route::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

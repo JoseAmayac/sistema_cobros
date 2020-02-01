@@ -21,9 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'middleware' => 'api'
 ], function ($router) {
-
-    Route::post('login', [ 'as' => 'login', 'uses' => 'api\AuthController@login']);
-    
+    // Rutas para el modulo de autenticación
+    Route::post('login', [ 'as' => 'login', 'uses' => 'api\AuthController@login']);    
     Route::post('signup', 'api\AuthController@signup');
     Route::get('logout', 'api\AuthController@logout');
     Route::get('refresh', 'api\AuthController@refresh');
@@ -31,15 +30,18 @@ Route::group([
     Route::post('reset-password','api\ResetPasswordController@sendEmail');
     Route::post('changePassword','api\ChangePasswordController@change');
 
-    
+    // Rutas para vehiculos
+    Route::apiResource('vehicles', 'api\VehicleController');
+
+    // Rutas para clientes
+    Route::apiResource('clients', 'api\ClientController');
+
+    // Rutas para rutas, ajjaaajajja
+    Route::apiResource('routes','api\RouteController');
+
+    // Rutas para las acciones que se realizan sobre las rutas del sistema.
+    Route::get('prueba', 'api\RouteUserController@prueba');
 
 });
 
-// Rutas para vehiculos
-Route::apiResource('vehicles', 'api\VehicleController');
 
-// Rutas para clientes
-Route::apiResource('clients', 'api\ClientController');
-
-// Rutas para rutas, ajjaaajajja
-Route::apiResource('routes','api\RouteController');

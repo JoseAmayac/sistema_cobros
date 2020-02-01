@@ -23,6 +23,14 @@ class UserTableSeeder extends Seeder
         $admin->role_id = Role::where('name', 'admin')->first()->id;
         $admin->save();
 
+        $admin2 = new User();
+        $admin2->name = "Admin2";
+        $admin2->lastname = 'admin2';
+        $admin2->email = 'admin2@gmail.com';
+        $admin2->password = 'admin2'; 
+        $admin2->role_id = Role::where('name', 'admin')->first()->id;
+        $admin2->save();
+
         // ************** COBRADORES **********************
         $employee = new User();
         $employee->name = "cobrador 1";

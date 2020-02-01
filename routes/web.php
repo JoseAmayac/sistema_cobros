@@ -12,5 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+    // $route = App\Route::findOrFail(1);
+    // //$users = $route->users();
+
+    // foreach ($route->users as $user) 
+    // {
+    //     return response()->json(['data' => $user]);
+    // }
+
+
+    $user = App\User::findOrFail(1);
+
+    foreach ($user->routes as $route)
+    {
+        return response()->json(['data' => $route]);
+    }
+    
 });
