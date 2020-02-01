@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
         $client->cellphone = "3113457536";
         $client->address = "Cra 6 # 7-21";
         $client->role_id = Role::where('name', 'client')->first()->id;
-        $client->admin_id = Auth::id();
+        $client->admin_id = 1;
         $client->save();
 
         $client2 = new User();
@@ -60,7 +60,7 @@ class UserTableSeeder extends Seeder
         $client2->cellphone = "3114707230";
         $client2->address = "Cra 7 # 8-21";
         $client2->role_id = Role::where('name', 'client')->first()->id;
-        $client2->admin_id = Auth::id();
+        $client2->admin_id = 1;
         $client2->save();
 
         

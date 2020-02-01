@@ -15,7 +15,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -25,17 +25,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $id_admin = Auth::id();
-        $clients = User::where('admin_id', $id_admin)->get();
-        /**
-         * Para poder ejecutar el método de asociacion entre las tablas, ademas de eliminar los usuarios que sean cobradores,
-         * también se puede hacer directamente con un where en la consulta, esto implica que el role_id siempre sea el mismo.
-         */
-        for ($i=0; $i < count($clients); $i++) { 
-            if($clients[$i]->role->name != 'client'){
-                unset($clients[$i]);
-            }
-        }
+        $id_admin = 1; // BOOOOORRRARRR
+        //$id_admin = Auth::id(); // DEEEJJJAAARRR
+        $clients = User::where('admin_id', $id_admin)
+                            ->where('role_id', 3)->get();
+                            
         return response()->json(['clients' => $clients], 200);
     }
 
