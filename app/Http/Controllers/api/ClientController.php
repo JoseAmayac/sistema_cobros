@@ -15,7 +15,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -25,10 +25,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $id_admin = 1; // BOOOOORRRARRR
-        //$id_admin = Auth::id(); // DEEEJJJAAARRR
+        $id_admin = Auth::id();
+        //El rol de cliente siempre será el id = 3.
         $clients = User::where('admin_id', $id_admin)
-                            ->where('role_id', 3)->get();
+                            ->where('role_id', 3)->get(); 
                             
         return response()->json(['clients' => $clients], 200);
     }

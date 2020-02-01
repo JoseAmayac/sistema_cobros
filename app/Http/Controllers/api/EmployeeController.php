@@ -11,7 +11,7 @@ class EmployeeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -21,7 +21,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $admin_id = Auth::id();
+        $admin_id = 1;
+        //$admin_id = Auth::id();
+        //El rol de los empleados siempre es 2.
         $employees = User::where('admin_id', $admin_id)
                             ->where('role_id', 2)->get();
 

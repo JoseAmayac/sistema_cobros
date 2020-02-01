@@ -19,7 +19,8 @@ class VehiclesTableSeeder extends Seeder
         $vehicle->model = "2010";
         $vehicle->cylindering = "200";
         $vehicle->papers_due_date = "2020-01-14 14:57:08"; 
-        $vehicle->admin_id = User::where('name','admin')->first()->id;
+        //$vehicle->admin_id = User::where('name','admin')->first()->id;
+        $vehicle->admin_id = 1;
         $vehicle->save();
 
         $vehicle2 = new Vehicle();
@@ -28,7 +29,8 @@ class VehiclesTableSeeder extends Seeder
         $vehicle2->model = "2014";
         $vehicle2->cylindering = "125";
         $vehicle2->papers_due_date = "2021-01-14 14:57:08"; 
-        $vehicle2->admin_id = User::where('name','admin')->first()->id;
+        //$vehicle2->admin_id = User::where('name','admin')->first()->id;
+        $vehicle2->admin_id = 1;
         $vehicle2->save();
 
         $vehicle3 = new Vehicle();

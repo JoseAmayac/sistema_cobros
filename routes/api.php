@@ -30,14 +30,17 @@ Route::group([
     Route::post('reset-password','api\ResetPasswordController@sendEmail');
     Route::post('changePassword','api\ChangePasswordController@change');
 
+    // Rutas para rutas, ajjaaajajja
+    Route::apiResource('routes','api\RouteController');
+
     // Rutas para vehiculos
     Route::apiResource('vehicles', 'api\VehicleController');
 
     // Rutas para clientes
     Route::apiResource('clients', 'api\ClientController');
 
-    // Rutas para rutas, ajjaaajajja
-    Route::apiResource('routes','api\RouteController');
+    // Rutas para los cobradores (employees)
+    Route::apiResource('employees', 'api\EmployeeController');    
 
     // Rutas para las acciones que se realizan sobre las rutas del sistema.
     Route::get('prueba', 'api\RouteUserController@prueba');
