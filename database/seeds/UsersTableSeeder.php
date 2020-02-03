@@ -83,6 +83,28 @@ class UsersTableSeeder extends Seeder
         $client2->admin_id = 1;
         $client2->save();
 
+        $client3 = new User(); // id => 7
+        $client3->name = "cliente 3";
+        $client3->lastname = "Apellidos 3";
+        $client3->dni = "12345342";
+        $client3->cellphone = "3114707123";
+        $client3->address = "Cra 7 # 8-222";
+        $client3->role_id = Role::where('name', 'client')->first()->id;
+        //$client3->role_id = 3;
+        $client3->admin_id = 2;
+        $client3->save();
+
+        $client4 = new User(); // id => 8
+        $client4->name = "cliente 4";
+        $client4->lastname = "Apellidos 4";
+        $client4->dni = "12345323";
+        $client4->cellphone = "3114711230";
+        $client4->address = "Cra 7 # 12-21";
+        $client4->role_id = Role::where('name', 'client')->first()->id;
+        //$client4->role_id = 3;
+        $client4->admin_id = 2;
+        $client4->save();
+
         
     }
 }

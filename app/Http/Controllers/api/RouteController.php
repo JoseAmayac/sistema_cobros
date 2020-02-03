@@ -43,7 +43,7 @@ class RouteController extends Controller
         $route = Route::create($info);
 
         return response()->json([
-            'route' => $info
+            'route' => $route
         ]);
     }
 

@@ -15,7 +15,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -41,19 +41,16 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        $id = Auth::id();
-        $client = User::create([
-            'name' => $request->input('name'),
-            'lastname' => $request->input('lastname'),
-            'dni' => $request->input('dni'),
-            'cellphone' => $request->input('cellphone'),
-            'address' => $request->input('address'),
-            'role_id' => Role::where('name','client')->first()->id
-        ]);
-        $client->admin_id = $id;
-        $client->save();
+        //return response()->json(['client' => "jajaj"], 200);
+        $admin_id = Auth::id(); // =====>>>ERROOR, no funciona para este metodo.
+        //$admin_id = 1;
+        $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
+        $info = $request->all();
+        $info['admin_id'] = $admin_id;
+        $info['role_id'] = $role_id;
+        $client = User::create($info);
 
-        return response()->json(['client' => $client],200);
+        return response()->json(['client' => $client], 200);
     }
 
     /**

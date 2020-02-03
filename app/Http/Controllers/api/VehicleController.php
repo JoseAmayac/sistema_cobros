@@ -15,7 +15,7 @@ class VehicleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
     
     /**
@@ -40,18 +40,13 @@ class VehicleController extends Controller
      */
     public function store(VehicleRequest $request)
     {
-        $vehicle = new Vehicle();
-        $vehicle->license_plate = $request->license_plate;
-        $vehicle->mark = $request->mark;
-        $vehicle->model = $request->model;
-        $vehicle->cylindering = $request->cylindering;
-        $vehicle->papers_due_date = Carbon::now();
-        $vehicle->admin_id = Auth::id();
-        $vehicle->save();
-        $resource_url = "api/vehicles/" . $vehicle->id;
+        $info = $request->all();
+        $admin_id = Auth::id();
+        //$admin_id = 1;
+        $info['admin_id'] = $admin_id;
+        $vehicle = Vehicle::create($info);
 
-        return response()->json(['data' => $vehicle], 201)
-                        ->header('Location', $resource_url);
+        return response()->json(['vehicle' => $info]);
     }
 
     /**
@@ -90,7 +85,8 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        $vehicle = Vehicle::find($id)->delete();
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->delete();
         return response()->json(['message' => 'El vehículo ha sido eliminado'], 200);
     }
 }

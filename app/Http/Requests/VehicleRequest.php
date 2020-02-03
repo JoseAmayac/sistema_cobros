@@ -27,12 +27,13 @@ class VehicleRequest extends FormRequest
     {
         $id = $this->route('vehicle');
         return [
-            'license_plate'=> [
-                'required',
-                'max:10',
-                'unique:vehicles,
-                license_plate,'.$this->route('vehicle').',id,deleted_at,NULL'
-            ],
+            // 'license_plate' => [
+            //     'required',
+            //     'max:10',
+            //     'unique:vehicles,
+            //     license_plate,'.$this->route('vehicle').',id,deleted_at,NULL'
+            // ],
+            'license_plate' => 'required|max:10|unique:vehicles',
             'mark' => 'required|max:100',
             'model' => 'required|digits:4',
             'cylindering' => 'required|max:100',
