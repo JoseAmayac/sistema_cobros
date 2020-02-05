@@ -73,7 +73,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ClientRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $client = User::findOrFail($id);
         $client->update($request->all());

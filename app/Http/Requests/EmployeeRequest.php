@@ -13,7 +13,7 @@ class EmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,10 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
-            'lastname' => 'required|max:100',
             'dni' => 'required|unique:users|max:100',
-            'cellphone' => 'required|unique:users|max:15',
+            'name' => 'required|max:100',
+            'lastname' => 'required|max:100',            
+            'cellphone' => 'required|unique:users|max:15'
         ];
     }
 }

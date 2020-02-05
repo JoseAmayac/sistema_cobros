@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -38,7 +39,13 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-        $employee = User::create($request->all());
+        $info = $request->all();
+        $admin_id = Auth::id();
+        $role_id = 2; // ==> Los cobradores tienen el rol con id=2.
+        $info['admin_id'] = $admin_id;
+        $info['role_id'] = $role_id;
+
+        $employee = User::create($info);
 
         return response()->json(['employee' => $employee]);
     }
@@ -63,9 +70,15 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EmployeeRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $employee = User::findOrFail($id);
+        // $employee->dni = $request->dni;
+        // $employee->name = $request->name;
+        // $employee->lastname = $request->lastname;
+        // $employee->cellphone = $request->cellphone;
+        // $employee->address = $request->addres;
+
         $employee->update($request->all());
 
         return response()->json([
