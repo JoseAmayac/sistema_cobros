@@ -12,24 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use SoftDeletes;
-
-    /**
-     * Método de asociación con tabla role 
-     */
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
-     * Método de asociación con tabla rutas 
-     * (un usuario esta en varias rutas) 
-     */
-    public function routes()
-    {
-        return $this->belongsToMany(Route::class);
-    }
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -65,6 +48,30 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Un usuario tiene un rol (Administrador, cliente o cobrador).
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Método de asociación con tabla rutas 
+     * (un usuario esta en varias rutas) 
+     */
+    public function routes()
+    {
+        return $this->belongsToMany(Route::class);
+    }
+
+    /**
+     * Foto que tiene asociada el usuario.
+     */
+    public function photo()
+    {
+        return $this->hasOne(Photo::class);
+    }
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.

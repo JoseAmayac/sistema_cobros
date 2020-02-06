@@ -6,16 +6,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Role;
 use App\User;
-
-// use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -41,14 +40,22 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        //return response()->json(['client' => "jajaj"], 200);
-        $admin_id = Auth::id(); // =====>>>ERROOR, no funciona para este metodo.
-        //$admin_id = 1;
+        //$admin_id = Auth::id(); 
+        $admin_id = 1;
         $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
+        $photo = $request->file('photo');
+        //return response()->json(["foto"=>$photo->getClientOriginalName()]);
+        if($photo)
+        {
+            $photo_name = Carbon::now()."-".$photo->getClientOriginalName();
+            $photo->move(public_path('')."\\images\\users", $photo_name);
+            return response()->json(['client' => $photo_name], 200);
+        }
         $info = $request->all();
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
-        $client = User::create($info);
+        //$client = User::create($info);
+        $client = User::find(1);
 
         return response()->json(['client' => $client], 200);
     }
