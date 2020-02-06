@@ -19,7 +19,7 @@ class CreatePhotosTable extends Migration
             $table->timestamps();
 
             // Llaves foraneas
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->foreign('user_id')
                     ->references('id')->on('users')

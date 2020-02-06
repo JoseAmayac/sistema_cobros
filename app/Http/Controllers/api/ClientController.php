@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Role;
 use App\User;
+use App\Photo;
 
 class ClientController extends Controller
 {
@@ -24,7 +26,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $id_admin = Auth::id();
+        //$id_admin = Auth::id();
+        $id_admin = 1;
         //El rol de cliente siempre será el id = 3.
         $clients = User::where('admin_id', $id_admin)
                             ->where('role_id', 3)->get(); 
@@ -43,19 +46,21 @@ class ClientController extends Controller
         //$admin_id = Auth::id(); 
         $admin_id = 1;
         $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
-        $photo = $request->file('photo');
-        //return response()->json(["foto"=>$photo->getClientOriginalName()]);
-        if($photo)
-        {
-            $photo_name = Carbon::now()."-".$photo->getClientOriginalName();
-            $photo->move(public_path('')."\\images\\users", $photo_name);
-            return response()->json(['client' => $photo_name], 200);
-        }
-        $info = $request->all();
+        //$info = $request->all();
+        $info = $request->except('photo');
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
-        //$client = User::create($info);
-        $client = User::find(1);
+        $client = User::create($info);
+
+        $photo = $request->file('photo');
+        if($photo)
+        {
+            $path = Storage::putFile('users/clients', $photo);
+            $client_photo = new Photo();
+            $client_photo->route = $path;
+            $client_photo->user_id = $client->id;
+            $client_photo->save();
+        }
 
         return response()->json(['client' => $client], 200);
     }
@@ -69,7 +74,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = User::findOrFail($id);
-        $client->role;
+        $client->photo;
         return response()->json(['client' => $client]);
     }
 
