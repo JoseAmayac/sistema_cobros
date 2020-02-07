@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
+use App\User;
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,13 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        //$admin_id = 1;
+        $admin_id = Auth::id();
+        //El rol de los empleados siempre es 2.
+        $employees = User::where('admin_id', $admin_id)
+                            ->where('role_id', 2)->get();
+
+        return response()->json(['employees' => $employees]);                                               
     }
 
     /**
@@ -23,9 +37,17 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        $info = $request->all();
+        $admin_id = Auth::id();
+        $role_id = 2; // ==> Los cobradores tienen el rol con id=2.
+        $info['admin_id'] = $admin_id;
+        $info['role_id'] = $role_id;
+
+        $employee = User::create($info);
+
+        return response()->json(['employee' => $employee]);
     }
 
     /**
@@ -36,7 +58,9 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = User::findOrFail($id);
+
+        return response()->json(['employee' => $employee]);
     }
 
     /**
@@ -48,7 +72,18 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employee = User::findOrFail($id);
+        // $employee->dni = $request->dni;
+        // $employee->name = $request->name;
+        // $employee->lastname = $request->lastname;
+        // $employee->cellphone = $request->cellphone;
+        // $employee->address = $request->addres;
+
+        $employee->update($request->all());
+
+        return response()->json([
+            'employee' => $employee
+        ],200);
     }
 
     /**
@@ -59,6 +94,11 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $employee = User::findOrFail($id);
+        $employee->delete();
+
+        return response()->json([
+            'message' => 'Cobrador eliminado de la lista'
+        ]);
     }
 }

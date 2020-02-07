@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Role;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-
-// use Illuminate\Support\Facades\Auth;
+use App\Photo;
 
 class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -26,17 +26,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $id_admin = Auth::id();
-        $clients = User::where('admin_id', $id_admin)->get();
-        /**
-         * Para poder ejecutar el método de asociacion entre las tablas, ademas de eliminar los usuarios que sean cobradores,
-         * también se puede hacer directamente con un where en la consulta, esto implica que el role_id siempre sea el mismo.
-         */
-        for ($i=0; $i < count($clients); $i++) { 
-            if($clients[$i]->role->name != 'client'){
-                unset($clients[$i]);
-            }
-        }
+        //$id_admin = Auth::id();
+        $id_admin = 1;
+        //El rol de cliente siempre será el id = 3.
+        $clients = User::where('admin_id', $id_admin)
+                            ->where('role_id', 3)->get(); 
+                            
         return response()->json(['clients' => $clients], 200);
     }
 
@@ -48,19 +43,32 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        $id = Auth::id();
-        $client = User::create([
-            'name' => $request->input('name'),
-            'lastname' => $request->input('lastname'),
-            'dni' => $request->input('dni'),
-            'cellphone' => $request->input('cellphone'),
-            'address' => $request->input('address'),
-            'role_id' => Role::where('name','client')->first()->id
-        ]);
-        $client->admin_id = $id;
-        $client->save();
+        //$admin_id = Auth::id(); 
+        $admin_id = 1;
+        $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
+        //$info = $request->all();
+        $info = $request->except('photo');
+        $info['admin_id'] = $admin_id;
+        $info['role_id'] = $role_id;
+        
+        $photo = $request->file('photo');
+        if($photo)
+        {
+            $path = Storage::putFile('users/clients', $photo);
+            $client_photo = new Photo();
+            $client_photo->route = $path;
+            //$client_photo->user_id = $client->id;
+            $client_photo->save();
+            $info['photo_id'] = $client_photo->id;
+        }
+        else //Se le asigna la foto por defecto para los usuarios.
+        {
+            $info['photo_id'] = 1; //==> la foto por defecto de usuarios tiene el id "1".
+        }
 
-        return response()->json(['client' => $client],200);
+        $client = User::create($info);
+
+        return response()->json(['client' => $client], 200);
     }
 
     /**
@@ -72,7 +80,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = User::findOrFail($id);
-        $client->role;
+        $client->photo;
         return response()->json(['client' => $client]);
     }
 
@@ -83,7 +91,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ClientRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $client = User::findOrFail($id);
         $client->update($request->all());

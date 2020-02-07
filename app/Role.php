@@ -5,7 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
-{
+{    
+    protected $fillable = [
+        'name', 'description'
+    ];
+
     /**
      * Asociacion con la tabla user
      */
@@ -14,8 +18,4 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
-    
-    protected $fillable = [
-        'name', 'description'
-    ];
 }

@@ -14,6 +14,7 @@ class Vehicle extends Model
         'mark',
         'model',
         'cylindering',
-        'papers_due_data'
+        'papers_due_date',
+        'admin_id'
     ];
 }

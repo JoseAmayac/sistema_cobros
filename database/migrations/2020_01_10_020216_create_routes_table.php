@@ -24,7 +24,7 @@ class CreateRoutesTable extends Migration
             $table->foreign('admin_id')
                     ->references('id')->on('users')
                     ->onDelete('restrict')
-                    ->onUpdate('restrict');
+                    ->onUpdate('cascade');
         });
     }
 

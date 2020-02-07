@@ -31,18 +31,16 @@ class RouteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena una nueva ruta en la base de datos.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
     public function store(RouteRequest $request)
     {
-        $route = new Route();
-        $route->name = $request->input('name');
-        $route->ammount = $request->input('ammount');
-        $route->admin_id = Auth::id();
-        $route->save();
+        $info = $request->all();
+        $info['admin_id'] = Auth::id();
+        $route = Route::create($info);
 
         return response()->json([
             'route' => $route

@@ -17,8 +17,8 @@ class CreateVehiclesTable extends Migration
             $table->bigIncrements('id');
             $table->string('license_plate');
             $table->string('mark');
-            $table->string('model');
-            $table->string('cylindering');
+            $table->integer('model');
+            $table->integer('cylindering');
             $table->date('papers_due_date');
             $table->timestamps();
             $table->softDeletes();
