@@ -15,6 +15,6 @@ class Photo extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 }

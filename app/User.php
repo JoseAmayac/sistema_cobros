@@ -27,7 +27,8 @@ class User extends Authenticatable implements JWTSubject
         'email', 
         'password', 
         'role_id', 
-        'admin_id'
+        'admin_id',
+        'photo_id'
     ];
 
     /**
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function photo()
     {
-        return $this->hasOne(Photo::class);
+        return $this->belongsTo(Photo::class);
     }
 
     /**

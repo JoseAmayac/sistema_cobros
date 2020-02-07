@@ -50,17 +50,23 @@ class ClientController extends Controller
         $info = $request->except('photo');
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
-        $client = User::create($info);
-
+        
         $photo = $request->file('photo');
         if($photo)
         {
             $path = Storage::putFile('users/clients', $photo);
             $client_photo = new Photo();
             $client_photo->route = $path;
-            $client_photo->user_id = $client->id;
+            //$client_photo->user_id = $client->id;
             $client_photo->save();
+            $info['photo_id'] = $client_photo->id;
         }
+        else //Se le asigna la foto por defecto para los usuarios.
+        {
+            $info['photo_id'] = 1; //==> la foto por defecto de usuarios tiene el id "1".
+        }
+
+        $client = User::create($info);
 
         return response()->json(['client' => $client], 200);
     }
