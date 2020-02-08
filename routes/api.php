@@ -45,6 +45,9 @@ Route::group([
     // Rutas para las acciones que se realizan sobre las rutas del sistema.
     Route::get('prueba', 'api\RouteUserController@prueba');
 
+    // Ruta para obtener el número de recursos creados por el administrador.
+    Route::get('general', 'api\GeneralInformationController@getGeneralCount');
+
 });
 
 
