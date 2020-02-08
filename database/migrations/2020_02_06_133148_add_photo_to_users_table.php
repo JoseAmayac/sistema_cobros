@@ -17,7 +17,7 @@ class AddPhotoToUsersTable extends Migration
             $table->unsignedBigInteger('photo_id')->nullable();
 
             $table->foreign('photo_id')
-                    ->references('id')->on('users')
+                    ->references('id')->on('photos')
                     ->onDelete('set null')
                     ->onUpdate('set null');
         });

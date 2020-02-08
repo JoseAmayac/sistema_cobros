@@ -44,11 +44,8 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        // dd($request->all());
         $admin_id = Auth::id(); 
-        // $admin_id = 1;
         $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
-        //$info = $request->all();
         $info = $request->except('photo');
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
@@ -57,9 +54,9 @@ class ClientController extends Controller
         if($photo)
         {
             $path = Storage::putFile('public/users/clients', $photo);
+            
             $client_photo = new Photo();
             $client_photo->route = $path;
-            //$client_photo->user_id = $client->id;
             $client_photo->save();
             $info['photo_id'] = $client_photo->id;
         }
@@ -69,9 +66,7 @@ class ClientController extends Controller
         }
 
         $client = User::create($info);
-        
         $path_photo = "/storage".substr($path,6, strlen($path));
-
         return response()->json(['client' => $client,'path'=>$path_photo], 200);
     }
 
@@ -84,8 +79,12 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = User::findOrFail($id);
-        $client->photo;
-        return response()->json(['client' => $client]);
+        if($client->photo){
+            $path_photo = "/storage".substr($client->photo->route,6, strlen($client->photo->route));
+            return response()->json(['client' => $client,'path'=>$path_photo]); 
+        }else{
+            return response()->json(['client' => $client,'path'=>'']); 
+        }
     }
 
     /**
@@ -98,8 +97,24 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = User::findOrFail($id);
+        $image = $request->file('photo');
+        if($image){
+            $old_photo = $client->photo;
+            /**
+             * Si viene  una foto en el request y ya tenia una foto antes, la vieja foto se elinina
+             */
+            if($old_photo){
+                Storage::delete($client->photo->route);
+                Photo::findOrFail($client->photo->id)->delete();
+            }
+            $photo = $request->file('photo');
+            $new_photo_path = Storage::putFile('public/users/clients',$photo);
+            $client_photo = new Photo();
+            $client_photo->route = $new_photo_path;
+            $client_photo->save();
+            $request['photo_id'] = $client_photo->id;
+        }
         $client->update($request->all());
-
         return response()->json([
             'client' => $client
         ],200);
@@ -114,8 +129,10 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = User::findOrFail($id);
+        if($client->photo){
+            Storage::delete($client->photo->route);
+        }
         $client->delete();
-
         return response()->json([
             'message' => 'Cliente eliminado de la lista'
         ]);
