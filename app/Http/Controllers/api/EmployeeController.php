@@ -105,4 +105,14 @@ class EmployeeController extends Controller
             'message' => 'Cobrador eliminado de la lista'
         ]);
     }
+
+    public function asignVehicle(Request $request,$id){
+        $user = User::findOrFail($request->get('id'));
+        $user->vehicle_id = $id;
+        $user->update();
+
+        return response()->json([
+            'message' => 'Vehículo asignado correctamente'
+        ]);
+    }
 }
