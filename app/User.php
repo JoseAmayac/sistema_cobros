@@ -49,6 +49,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function vehicle(){
+        return $this->belongsTo(Vehicle::class);
+    }
     /**
      * Un usuario tiene un rol (Administrador, cliente o cobrador).
      */

@@ -34,8 +34,8 @@ Route::group([
     Route::apiResource('routes','api\RouteController');
 
     // Rutas para vehiculos
+    Route::get('vehicles/asign','api\VehicleController@listAsign');
     Route::apiResource('vehicles', 'api\VehicleController');
-
     // Rutas para clientes
     Route::apiResource('clients', 'api\ClientController');
 

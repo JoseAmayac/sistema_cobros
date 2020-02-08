@@ -32,6 +32,14 @@ class VehicleController extends Controller
         return response()->json(['vehicles' => $vehicles], 200);
     }
 
+    public function listAsign(){
+        $vehicles = Vehicle::where('admin_id',Auth::id())->whereDoesntHave('employees')->get();
+
+        return response()->json([
+            'vehicles' => $vehicles
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

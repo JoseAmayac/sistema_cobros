@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\User;
+use App\Vehicle;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -27,7 +29,9 @@ class EmployeeController extends Controller
         //El rol de los empleados siempre es 2.
         $employees = User::where('admin_id', $admin_id)
                             ->where('role_id', 2)->get();
-
+        foreach ($employees as $employee) {
+            $employee->vehicle;
+        }
         return response()->json(['employees' => $employees]);                                               
     }
 

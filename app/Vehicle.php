@@ -17,4 +17,8 @@ class Vehicle extends Model
         'papers_due_date',
         'admin_id'
     ];
+
+    public function employees(){
+        return $this->hasMany(User::class);
+    }
 }
