@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Role;
 use App\User;
 use App\Photo;
+use Facade\FlareClient\Http\Client;
 
 class ClientController extends Controller
 {
@@ -43,8 +44,9 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        //$admin_id = Auth::id(); 
-        $admin_id = 1;
+        // dd($request->all());
+        $admin_id = Auth::id(); 
+        // $admin_id = 1;
         $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
         //$info = $request->all();
         $info = $request->except('photo');
@@ -54,7 +56,7 @@ class ClientController extends Controller
         $photo = $request->file('photo');
         if($photo)
         {
-            $path = Storage::putFile('users/clients', $photo);
+            $path = Storage::putFile('public/users/clients', $photo);
             $client_photo = new Photo();
             $client_photo->route = $path;
             //$client_photo->user_id = $client->id;
@@ -67,8 +69,10 @@ class ClientController extends Controller
         }
 
         $client = User::create($info);
+        
+        $path_photo = "/storage".substr($path,6, strlen($path));
 
-        return response()->json(['client' => $client], 200);
+        return response()->json(['client' => $client,'path'=>$path_photo], 200);
     }
 
     /**
