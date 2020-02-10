@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
 use App\Role;
 use App\User;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -83,6 +84,7 @@ class AuthController extends Controller
         return $this->respondWithToken(Auth::refresh());
     }
 
+    
     /**
      * Get the token array structure.
      *

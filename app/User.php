@@ -62,13 +62,12 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Método de asociación con tabla rutas 
-     * (un usuario esta en varias rutas) 
+     * (un usuario esta en una ruta) 
      */
-    public function routes()
+    public function route()
     {
-        return $this->belongsToMany(Route::class);
+        return $this->belongsTo(Route::class);
     }
-
     /**
      * Foto que tiene asociada el usuario.
      */

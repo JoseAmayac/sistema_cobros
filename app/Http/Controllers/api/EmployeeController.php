@@ -31,6 +31,7 @@ class EmployeeController extends Controller
                             ->where('role_id', 2)->get();
         foreach ($employees as $employee) {
             $employee->vehicle;
+            $employee->route;
         }
         return response()->json(['employees' => $employees]);                                               
     }
@@ -113,6 +114,16 @@ class EmployeeController extends Controller
 
         return response()->json([
             'message' => 'Vehículo asignado correctamente'
+        ]);
+    }
+
+    public function asignRoute(Request $request, $id){
+        $user = User::findOrFail($request->get('id_employee'));
+        $user->route_id = $id;
+        $user->update();
+
+        return response()->json([
+            'message' => 'Ruta asignada correctamente'
         ]);
     }
 }

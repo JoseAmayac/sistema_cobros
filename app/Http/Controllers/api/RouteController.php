@@ -28,6 +28,22 @@ class RouteController extends Controller
         return response()->json([
             'routes' => $routes
         ]);
+    }   
+
+    public function listAsign(){
+        $routes = Route::where('admin_id',Auth::id())->get(); 
+        foreach ($routes as $i => $route) {
+            if($route->users){
+                foreach ($route->users as $route_user) {
+                    if($route_user->role_id == 2){
+                        unset($routes[$i]);
+                    }
+                }
+            }
+        }
+        return response()->json([
+            'routes' => $routes
+        ]);
     }
 
     /**

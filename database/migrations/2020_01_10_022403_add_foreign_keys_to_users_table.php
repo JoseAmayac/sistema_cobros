@@ -23,6 +23,7 @@ class AddForeignKeysToUsersTable extends Migration
 
             $table->unsignedBigInteger('role_id')->after('id');
 
+            $table->unsignedBigInteger('route_id')->nullable();
             // Recursiva, para modelar clientes del administrador.
             $table->unsignedBigInteger('admin_id')
                                     ->after('role_id')->nullable();
@@ -44,6 +45,11 @@ class AddForeignKeysToUsersTable extends Migration
             
             $table->foreign('role_id')
                     ->references('id')->on('roles')
+                    ->onDelete('restrict')
+                    ->onUpdate('restrict');
+
+            $table->foreign('route_id')
+                    ->references('id')->on('routes')
                     ->onDelete('restrict')
                     ->onUpdate('restrict');
 

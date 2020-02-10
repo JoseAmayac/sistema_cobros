@@ -31,6 +31,8 @@ Route::group([
     Route::post('changePassword','api\ChangePasswordController@change');
 
     // Rutas para rutas, ajjaaajajja
+    Route::get('routes/asign','API\RouteController@listAsign');
+    Route::put('routes/asign/{routes}','api\EmployeeController@asignRoute');
     Route::apiResource('routes','api\RouteController');
 
     // Rutas para vehiculos
