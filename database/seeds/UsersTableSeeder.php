@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
     {
         //************** ADMINISTRADORES **********************
         $admin = new User(); // id => 1
+        $admin->username = "adm1";
         $admin->name = "Admin";
         $admin->lastname = 'admin';
         $admin->email = 'admin@gmail.com';
@@ -25,6 +26,7 @@ class UsersTableSeeder extends Seeder
         $admin->save();
 
         $admin2 = new User(); // id => 2
+        $admin2->username = "adm2";
         $admin2->name = "Admin2";
         $admin2->lastname = 'admin2';
         $admin2->email = 'admin2@gmail.com';
@@ -35,6 +37,7 @@ class UsersTableSeeder extends Seeder
 
         // ************** COBRADORES **********************
         $employee = new User(); // id => 3
+        $employee->username = "cob1";
         $employee->name = "cobrador 1";
         $employee->lastname = "Apellidos 1";
         $employee->dni = "1234563564";
@@ -48,6 +51,7 @@ class UsersTableSeeder extends Seeder
         $employee->save();
 
         $employee2 = new User(); // id => 4
+        $employee2->username = "cob2";
         $employee2->name = "cobrador 2";
         $employee2->lastname = "Apellidos 2";
         $employee2->dni = "12342454";
