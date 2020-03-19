@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Vehicle;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -49,7 +50,6 @@ class EmployeeController extends Controller
         $role_id = 2; // ==> Los cobradores tienen el rol con id=2.
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
-
         $employee = User::create($info);
 
         return response()->json(['employee' => $employee]);
