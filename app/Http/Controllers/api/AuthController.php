@@ -28,15 +28,21 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) 
+        $nose = request('email');
+        $password = request('password');
+        $field = "";
+        if(filter_var($nose,FILTER_VALIDATE_EMAIL) ){
+            $field = "email";
+        }else{
+            $field = "username";
+        }
+        if (! $token = auth()->attempt([$field => $nose, 'password' => $password])) 
         {
             return response()->json(['error' => 
                 'La contraseña o el correo electrónico son incorrectos'], 401);
         }
-
         return $this->respondWithToken($token);
+        
     }
 
     public function signup(SignUpRequest $request)
