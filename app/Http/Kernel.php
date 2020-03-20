@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-
+        
         \App\Http\Middleware\CORS::class,
     ];
 
@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'CORS' => \App\Http\Middleware\CORS::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
+        'role' => \App\Http\Middleware\CheckRole::class
     ];
 
     /**
