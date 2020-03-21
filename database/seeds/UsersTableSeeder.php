@@ -111,6 +111,9 @@ class UsersTableSeeder extends Seeder
         $client4->admin_id = 2;
         $client4->save();
 
+        // Clientes creados con FAKER.
+        factory(User::class, 20)->create();
+
         
     }
 }

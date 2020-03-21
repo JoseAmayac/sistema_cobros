@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Route;
+use App\User;
 
 class RoutesTableSeeder extends Seeder
 {
@@ -32,6 +33,8 @@ class RoutesTableSeeder extends Seeder
         $route3->ammount = 1020.2;
         $route3->admin_id = 1;
         $route3->save();
+
+        $clients = User::where('role_id', 3)->update(['route_id' => 1]);
 
     }
 }
