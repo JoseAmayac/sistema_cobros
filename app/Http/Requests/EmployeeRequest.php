@@ -25,6 +25,8 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'dni' => 'required|unique:users|max:100',
+            'username' => 'required|unique:users',
+            'password' => 'required|confirmed',
             'name' => 'required|max:100',
             'lastname' => 'required|max:100',            
             'cellphone' => 'required|unique:users|max:15'

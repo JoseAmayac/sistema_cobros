@@ -53,7 +53,10 @@ class EmployeeController extends Controller
         $info['role_id'] = $role_id;
         $employee = User::create($info);
 
-        return response()->json(['employee' => $employee]);
+        return response()->json([
+            'employee' => $employee,
+            'message' => 'Cobrador creado correctamente'
+        ]);
     }
 
     /**

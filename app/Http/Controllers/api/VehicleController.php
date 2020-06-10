@@ -55,7 +55,10 @@ class VehicleController extends Controller
         $info['admin_id'] = $admin_id;
         $vehicle = Vehicle::create($info);
 
-        return response()->json(['vehicle' => $info]);
+        return response()->json([
+            'vehicle' => $vehicle,
+            'message' => 'Vehículo creado correctamente'
+        ]);
     }
 
     /**
@@ -83,7 +86,10 @@ class VehicleController extends Controller
         $vehicle->update($request->all());
         $vehicle->papers_due_date = $request->papers_due_date;
 
-        return response()->json(['vehicle' => $vehicle], 200);
+        return response()->json([
+            'vehicle' => $vehicle,
+            'message' => 'Información del vehículo actualizada correctamente'
+        ], 200);
     }
 
     /**
@@ -96,6 +102,8 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->delete();
-        return response()->json(['message' => 'El vehículo ha sido eliminado'], 200);
+        return response()->json([
+            'message' => 'El vehículo ha sido eliminado correctamente de la lista'
+        ], 200);
     }
 }

@@ -47,28 +47,32 @@ class ClientController extends Controller
     {
         $admin_id = Auth::id(); 
         $role_id = 3; // ==> El rol "Cliente" siempre será el id 3.
-        $info = $request->except('photo');
+        $info = $request->all();
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
         
-        $photo = $request->file('photo');
-        if($photo)
-        {
-            $path = Storage::putFile('public/users/clients', $photo);
+        // $photo = $request->file('photo');
+        // if($photo)
+        // {
+        //     $path = Storage::putFile('public/users/clients', $photo);
             
-            $client_photo = new Photo();
-            $client_photo->route = $path;
-            $client_photo->save();
-            $info['photo_id'] = $client_photo->id;
-        }
-        else //Se le asigna la foto por defecto para los usuarios.
-        {
-            $info['photo_id'] = 1; //==> la foto por defecto de usuarios tiene el id "1".
-        }
+        //     $client_photo = new Photo();
+        //     $client_photo->route = $path;
+        //     $client_photo->save();
+        //     $info['photo_id'] = $client_photo->id;
+        // }
+        // else //Se le asigna la foto por defecto para los usuarios.
+        // {
+        //     $info['photo_id'] = 1; //==> la foto por defecto de usuarios tiene el id "1".
+        // }
 
+        // $path_photo = "/storage".substr($path,6, strlen($path));
+        
         $client = User::create($info);
-        $path_photo = "/storage".substr($path,6, strlen($path));
-        return response()->json(['client' => $client,'path'=>$path_photo], 200);
+        return response()->json([
+            'client' => $client,
+            'message' => 'Cliente creado correctamente'
+        ], 200);
     }
 
     /**
