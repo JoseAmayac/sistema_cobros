@@ -43,6 +43,7 @@ class UsersTableSeeder extends Seeder
         $employee->dni = "1234563564";
         $employee->cellphone = "3114707230";
         $employee->address = "Cra 7 # 8-21";
+        $employee->password = "cobrador";
         $employee->role_id = Role::where('name', 'employee')->first()->id;
         //$employee->role_id = 2;
         $employee->state = true;
@@ -58,6 +59,7 @@ class UsersTableSeeder extends Seeder
         $employee2->cellphone = "3114707231";
         $employee2->address = "Cra 7 # 9-21";
         $employee2->role_id = Role::where('name', 'employee')->first()->id;
+        $employee2->password = "cobrador";
         //$employee2->role_id = 2;
         $employee2->state = true;
         // $employee->vehicle_id = 2; =====> seeder "VehicleEmployeeSeeder"
@@ -108,6 +110,9 @@ class UsersTableSeeder extends Seeder
         //$client4->role_id = 3;
         $client4->admin_id = 2;
         $client4->save();
+
+        // Clientes creados con FAKER.
+        factory(User::class, 20)->create();
 
         
     }

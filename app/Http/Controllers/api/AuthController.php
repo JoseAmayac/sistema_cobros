@@ -43,7 +43,7 @@ class AuthController extends Controller
                 'Correo electrónico, nombre de usuario o contraseña incorrecta'], 401);
         }
         return $this->respondWithToken($token);
-        
+                
     }
 
     public function signup(SignUpRequest $request)
