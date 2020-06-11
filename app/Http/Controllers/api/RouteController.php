@@ -53,7 +53,8 @@ class RouteController extends Controller
         $route = Route::create($info);
 
         return response()->json([
-            'route' => $route
+            'route' => $route,
+            'message' => 'Ruta creada correctamente'
         ]);
     }
 
@@ -85,7 +86,8 @@ class RouteController extends Controller
         $route->update($request->all());
 
         return response()->json([
-            'route' => $route
+            'route' => $route,
+            'message' => 'Información de la ruta actualizada correctamente'
         ]);
     }
 
@@ -100,7 +102,7 @@ class RouteController extends Controller
         $route = Route::findOrFail($id)->delete();
 
         return response()->json([
-            'message' => 'Ruta eliminada de la lista'
+            'message' => 'La ruta ha sido eliminada correctamente'
         ]);
     }
 }
