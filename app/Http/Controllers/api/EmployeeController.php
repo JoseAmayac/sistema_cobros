@@ -15,7 +15,7 @@ class EmployeeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('jwt.verify');
         $this->middleware('role');
     }
 
