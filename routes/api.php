@@ -53,6 +53,8 @@ Route::group([
     // Ruta para obtener el número de recursos creados por el administrador.
     Route::get('general', 'api\GeneralInformationController@getGeneralCount');
 
+    Route::get('payments/paypal/create','api\PaymentController@createOrder');
+    Route::get('payments/paypal/authorize/{id}','api\PaymentController@authorizeOrder');
 });
 
 
