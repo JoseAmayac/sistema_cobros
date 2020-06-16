@@ -50,7 +50,7 @@ class ClientController extends Controller
         $info = $request->all();
         $info['admin_id'] = $admin_id;
         $info['role_id'] = $role_id;
-        
+        $info['photo_id'] = 1;
         // $photo = $request->file('photo');
         // if($photo)
         // {
@@ -84,12 +84,10 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = User::findOrFail($id);
-        if($client->photo){
-            $path_photo = "/storage".substr($client->photo->route,6, strlen($client->photo->route));
-            return response()->json(['client' => $client,'path'=>$path_photo]); 
-        }else{
-            return response()->json(['client' => $client,'path'=>'']); 
-        }
+        $client->photo;
+        $client->route;
+        $client->role;
+        return response()->json($client); 
     }
 
     /**
@@ -141,5 +139,11 @@ class ClientController extends Controller
         return response()->json([
             'message' => 'Cliente eliminado de la lista'
         ]);
+    }
+
+    public function getPhoto($namePhoto){
+        $path = Storage::disk('local')->get('/photos/'.$namePhoto);
+
+        return response(Storage::disk('local')->get('/photos/'.$namePhoto))->header('Content-Type', 'application/png');
     }
 }

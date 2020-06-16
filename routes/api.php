@@ -42,6 +42,9 @@ Route::group([
 
     Route::apiResource('vehicles', 'api\VehicleController');
     // Rutas para clientes
+
+    Route::get('clients/image/{path}','api\ClientController@getPhoto');
+
     Route::apiResource('clients', 'api\ClientController');
 
     // Rutas para los cobradores (employees)

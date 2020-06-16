@@ -13,7 +13,7 @@ class PhotosTableSeeder extends Seeder
     public function run()
     {
         $user_default = new Photo();
-        $user_default->route = "users/default-user.png";
+        $user_default->route = "default_photo_sin_coincidencias.png";
         $user_default->save();
     }
 }
