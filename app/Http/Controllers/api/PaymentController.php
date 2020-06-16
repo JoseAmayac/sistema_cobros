@@ -7,10 +7,18 @@ use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role');
+        $this->middleware('jwt.verify');
+    }
+
     public function createOrder(){
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
@@ -28,7 +36,17 @@ class PaymentController extends Controller
         $client = PayPalService::client();
         $response = $client->execute($request);
 
-        return response()->json($response);
+        
+
+        $user = User::where('id',Auth::user()->id)->first();
+        $user->state = 1;
+        $user->update();
+
+
+        return response()->json([
+            'user' => $user,
+            $response
+        ]);
     }
 
 

@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('second_address')->nullable();
             $table->enum('reputation', [1, 2, 3, 4, 5])->nullable();
             $table->string('password')->nullable();
-            $table->boolean('state')->nullable();
+            $table->boolean('state')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
